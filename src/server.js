@@ -9,8 +9,8 @@ const app = express()
 //conexão com o banco de dados
 db.connect()
 
-//Habilita server para receber dados via post(formulário)
-app.use(express.urlencoded({extended: true})) 
+//habilita server para receber dados no formato JSON "Usar sempre que usar APIrestful"
+app.use(express.json())
 
 //definindo as rotas
 app.use('/api', routes)
