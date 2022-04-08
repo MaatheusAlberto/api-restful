@@ -1,5 +1,5 @@
 const express = require('express')
-//const path = require('path') //biblioteca já existende dentro do nodejs
+const cors = require('cors')
 
 const db = require('./database/db')
 const routes = require('./routes/routes')
@@ -8,6 +8,27 @@ const app = express()
 
 //conexão com o banco de dados
 db.connect()
+
+const allowedOrigins = [
+    'http://127.0.0.1:5500',
+    'http://www.app.com.br',
+]
+
+//Habilita CORS
+app.use(cors({
+
+    origin: function(origin, callback){
+        let allowed = true
+
+        //mobile app
+        if(!origin) allowed = true
+
+        if(!allowedOrigins.includes(origin)) allowed = false
+
+        callback(null, allowed)
+    }
+
+}))
 
 //habilita server para receber dados no formato JSON "Usar sempre que usar APIrestful"
 app.use(express.json())
